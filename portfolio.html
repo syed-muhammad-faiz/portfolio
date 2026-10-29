@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of a web developer building modern websites and AI-assisted digital experiences." />
+  <title>SF | Web Developer & AI-Powered Builder</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --ink: #17191f;
+      --muted: #646b78;
+      --line: #e3e6eb;
+      --accent: #5b5cf0;
+      --accent-dark: #4546d8;
+      --soft: #eeefff;
+      --radius: 20px;
+      --shadow: 0 16px 45px rgba(24, 29, 48, .07);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .site-header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(246, 247, 249, .88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(227, 230, 235, .8);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 76px; gap: 24px; }
+    .brand { font-size: 1.1rem; font-weight: 850; letter-spacing: -.04em; }
+    .brand span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 26px; color: var(--muted); font-size: .93rem; }
+    .nav-links a:hover, .footer-links a:hover { color: var(--accent); }
+    .nav-cta, .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      padding: 12px 18px; border-radius: 12px; border: 1px solid transparent;
+      background: var(--accent); color: white; font-weight: 700; cursor: pointer;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .nav-cta:hover, .button:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .button.secondary { background: white; color: var(--ink); border-color: var(--line); }
+    .button.secondary:hover { background: var(--soft); border-color: #d4d5ff; }
+    .menu-toggle { display: none; border: 1px solid var(--line); background: white; border-radius: 10px; padding: 9px 12px; cursor: pointer; }
+    .hero { padding: 86px 0 78px; }
+    .hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 60px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--accent); background: var(--soft); border: 1px solid #dedfff; border-radius: 999px; padding: 7px 12px; font-size: .82rem; font-weight: 750; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #20a779; box-shadow: 0 0 0 4px rgba(32,167,121,.12); }
+    h1 { font-size: clamp(2.7rem, 6vw, 4.8rem); line-height: 1.04; letter-spacing: -.065em; margin: 22px 0; max-width: 760px; }
+    h1 .highlight { color: var(--accent); }
+    .hero-copy { color: var(--muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-note { color: var(--muted); font-size: .88rem; margin-top: 22px; }
+    .hero-card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 26px;
+      padding: 25px; box-shadow: var(--shadow); position: relative; overflow: hidden;
+    }
+    .hero-card::before { content: ""; position: absolute; width: 190px; height: 190px; background: var(--soft); border-radius: 50%; top: -80px; right: -70px; }
+    .code-window { position: relative; background: #171923; color: #e9eafa; border-radius: 16px; padding: 18px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; }
+    .window-top { display: flex; gap: 6px; padding-bottom: 20px; }
+    .window-top i { width: 8px; height: 8px; border-radius: 50%; background: #777b8d; }
+    .code-line { margin: 8px 0; }
+    .code-purple { color: #b9a7ff; } .code-green { color: #a5e8c1; } .code-yellow { color: #ffda8b; }
+    .mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    .mini-stat { border: 1px solid var(--line); border-radius: 14px; padding: 13px; }
+    .mini-stat strong { display: block; font-size: .95rem; }
+    .mini-stat span { color: var(--muted); font-size: .78rem; }
+    section { padding: 76px 0; }
+    .section-heading { max-width: 680px; margin-bottom: 34px; }
+    .section-kicker { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 850; }
+    h2 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.05em; line-height: 1.12; margin: 10px 0 14px; }
+    .section-heading p { color: var(--muted); margin: 0; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .service-card, .project-card, .about-panel, .contact-panel {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    }
+    .service-card { padding: 25px; }
+    .icon-box { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; background: var(--soft); color: var(--accent); font-size: 1.3rem; margin-bottom: 18px; }
+    h3 { margin: 0 0 9px; font-size: 1.12rem; letter-spacing: -.025em; }
+    .service-card p, .project-content p, .about-panel p { color: var(--muted); margin: 0; font-size: .95rem; }
+    .projects { background: #eef0f4; }
+    .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .project-card { overflow: hidden; transition: transform .2s ease, box-shadow .2s ease; }
+    .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .project-visual { min-height: 200px; padding: 25px; display: flex; align-items: end; position: relative; overflow: hidden; }
+    .visual-noire { background: linear-gradient(135deg, #111 0%, #333 55%, #8c8c8c 100%); }
+    .visual-school { background: linear-gradient(135deg, #e9edff 0%, #cbd4ff 50%, #f8f9ff 100%); }
+    .visual-store { background: linear-gradient(135deg, #d9e5e8 0%, #f5f5f1 55%, #b4c6cc 100%); }
+    .visual-service { background: linear-gradient(135deg, #e8f4ef 0%, #c4e5d8 50%, #f6fbf8 100%); }
+    .visual-label { position: relative; background: rgba(255,255,255,.92); padding: 12px 15px; border-radius: 12px; font-weight: 850; letter-spacing: -.03em; box-shadow: 0 8px 25px rgba(0,0,0,.08); }
+    .visual-noire .visual-label { background: rgba(20,20,20,.86); color: white; border: 1px solid #555; }
+    .project-content { padding: 22px; }
+    .project-top { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+    .tag { background: #f1f2f6; color: #555d6b; border-radius: 7px; padding: 5px 9px; font-size: .75rem; font-weight: 650; }
+    .project-type { color: var(--accent); font-size: .76rem; font-weight: 800; white-space: nowrap; }
+    .about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; align-items: stretch; }
+    .about-panel { padding: 28px; }
+    .about-panel p + p { margin-top: 14px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .skill { border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; background: #fff; font-size: .86rem; font-weight: 700; }
+    .process-list { display: grid; gap: 16px; }
+    .process-item { display: grid; grid-template-columns: 42px 1fr; gap: 14px; }
+    .process-number { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; color: var(--accent); background: var(--soft); font-weight: 850; }
+    .process-item p { color: var(--muted); font-size: .92rem; margin: 0; }
+    .contact { background: #171923; color: white; }
+    .contact .section-heading p { color: #b8bdcb; }
+    .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 30px; align-items: start; }
+    .contact-details { display: grid; gap: 12px; margin-top: 25px; }
+    .contact-detail { display: flex; gap: 12px; align-items: center; color: #e3e5ec; }
+    .contact-detail span:first-child { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 11px; background: #292c3b; }
+    .contact-panel { color: var(--ink); padding: 25px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    label { display: block; font-size: .83rem; font-weight: 750; margin-bottom: 6px; }
+    .field { margin-bottom: 14px; }
+    input, textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 12px 13px; outline: none; background: #fbfbfd; }
+    input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(91,92,240,.12); }
+    textarea { min-height: 125px; resize: vertical; }
+    .form-note { color: var(--muted); font-size: .78rem; margin: 12px 0 0; }
+    .site-footer { background: #111219; color: #b8bdc9; padding: 26px 0; font-size: .87rem; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-brand { color: white; font-weight: 850; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a:hover { color: white; }
+    .back-top { color: white; }
+    @media (max-width: 850px) {
+      .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-grid { gap: 35px; }
+      .hero-card { max-width: 560px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { gap: 16px; }
+    }
+    @media (max-width: 620px) {
+      .container { width: min(100% - 30px, 1120px); }
+      .nav { min-height: 68px; }
+      .menu-toggle { display: inline-flex; }
+      .nav-cta { display: none; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 18px 22px 22px;
+        background: var(--bg); border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 7px 0; }
+      .hero { padding: 58px 0 50px; }
+      section { padding: 58px 0; }
+      .services-grid, .project-grid, .form-row { grid-template-columns: 1fr; }
+      .project-visual { min-height: 165px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-links { flex-wrap: wrap; }
+      h1 { font-size: clamp(2.6rem, 13vw, 4rem); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="FutureBossX home">S<span>F</span>.</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="nav-cta" href="#contact">Let's work together <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="status-dot"></span> Web Development + AI</div>
+          <h1>I build modern websites that help your <span class="highlight">business grow.</span></h1>
+          <p class="hero-copy">I'm a web developer and AI-powered builder creating professional business websites, e-commerce experiences, portfolios, and practical web applications — with a focus on clean design and easy-to-use experiences.</p>
+          <div class="hero-actions">
+            <a class="button" href="#projects">Explore my work <span aria-hidden="true">↗</span></a>
+            <a class="button secondary" href="#contact">Discuss a project</a>
+          </div>
+          <p class="hero-note">Thoughtful design. Useful features. AI-assisted workflows. Built around your goals.</p>
+        </div>
+        <div class="hero-card" aria-label="Web development preview">
+          <div class="code-window">
+            <div class="window-top"><i></i><i></i><i></i></div>
+            <div class="code-line"><span class="code-purple">const</span> developer = {</div>
+            <div class="code-line">&nbsp;&nbsp;name: <span class="code-green">"FutureBossX"</span>,</div>
+            <div class="code-line">&nbsp;&nbsp;focus: <span class="code-green">"Web Development"</span>,</div>
+            <div class="code-line">&nbsp;&nbsp;tools: [<span class="code-yellow">"Code"</span>, <span class="code-yellow">"AI"</span>],</div>
+            <div class="code-line">&nbsp;&nbsp;goal: <span class="code-green">"Build useful things"</span></div>
+            <div class="code-line">};</div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat"><strong>Responsive</strong><span>Mobile to desktop</span></div>
+            <div class="mini-stat"><strong>AI-assisted</strong><span>Smarter workflows</span></div>
+            <div class="mini-stat"><strong>User-focused</strong><span>Clear navigation</span></div>
+            <div class="mini-stat"><strong>Full-stack goals</strong><span>Frontend + backend</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">What I do</div>
+          <h2>Web solutions made for real people.</h2>
+          <p>From a strong first impression to the features behind the scenes, I help turn ideas into practical online experiences.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="icon-box" aria-hidden="true">⌘</div>
+            <h3>Business Websites</h3>
+            <p>Professional websites for local businesses, service providers, and growing brands — designed to build trust and explain what you offer.</p>
+          </article>
+          <article class="service-card">
+            <div class="icon-box" aria-hidden="true">▦</div>
+            <h3>E-commerce Websites</h3>
+            <p>Product pages, categories, search, carts, account flows, and order journeys planned around a smoother shopping experience.</p>
+          </article>
+          <article class="service-card">
+            <div class="icon-box" aria-hidden="true">✳</div>
+            <h3>Portfolio Websites</h3>
+            <p>Custom portfolios that present your skills, projects, and personal brand in a polished way that fits your goals.</p>
+          </article>
+          <article class="service-card">
+            <div class="icon-box" aria-hidden="true">▤</div>
+            <h3>Web Applications</h3>
+            <p>Ideas for dashboards, school management, store management, booking systems, and tools with clearly defined user roles.</p>
+          </article>
+          <article class="service-card">
+            <div class="icon-box" aria-hidden="true">⌁</div>
+            <h3>AI-Assisted Development</h3>
+            <p>I use AI tools to speed up prototyping, explore layouts, troubleshoot issues, and support the development workflow.</p>
+          </article>
+          <article class="service-card">
+            <div class="icon-box" aria-hidden="true">◎</div>
+            <h3>Responsive UI Design</h3>
+            <p>Clean layouts, readable content, consistent spacing, and navigation that works across phones, tablets, and computers.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">Selected concepts</div>
+          <h2>Projects and ideas I've explored.</h2>
+          <p>These cards represent project concepts and development work. Add live links, screenshots, and verified project details before publishing them as completed client work.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-visual visual-noire"><div class="visual-label">NOIRE / Fashion Store</div></div>
+            <div class="project-content">
+              <div class="project-top"><h3>Fashion E-commerce Concept</h3><span class="project-type">E-commerce</span></div>
+              <p>A premium streetwear store concept with product categories, customer accounts, wishlist and cart planning, and order inquiries.</p>
+              <div class="tag-list"><span class="tag">Responsive UI</span><span class="tag">Product Catalog</span><span class="tag">Supabase concept</span></div>
+            </div>
+          </article>
+          <article class="project-card">
+            <div class="project-visual visual-school"><div class="visual-label">School Management System</div></div>
+            <div class="project-content">
+              <div class="project-top"><h3>School Management Platform</h3><span class="project-type">Web App</span></div>
+              <p>A school platform concept with school registration, student access, administrator tools, and role-based areas.</p>
+              <div class="tag-list"><span class="tag">Dashboard Planning</span><span class="tag">Authentication</span><span class="tag">SQLite concept</span></div>
+            </div>
+          </article>
+          <article class="project-card">
+            <div class="project-visual visual-store"><div class="visual-label">Store Management</div></div>
+            <div class="project-content">
+              <div class="project-top"><h3>Store Management System</h3><span class="project-type">Management</span></div>
+              <p>A planned management interface for physical and online store operations, with separate staff and admin experiences.</p>
+              <div class="tag-list"><span class="tag">Admin UI</span><span class="tag">Staff Roles</span><span class="tag">Business Tools</span></div>
+            </div>
+          </article>
+          <article class="project-card">
+            <div class="project-visual visual-service"><div class="visual-label">CoolCare AC Services</div></div>
+            <div class="project-content">
+              <div class="project-top"><h3>Service Business Website</h3><span class="project-type">Business</span></div>
+              <p>A service website concept with repair and maintenance offerings, service details, contact information, and a booking form.</p>
+              <div class="tag-list"><span class="tag">Lead Generation</span><span class="tag">Booking Form</span><span class="tag">Mobile Friendly</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">A little about me</div>
+          <h2>Design-minded. Curious about technology. Focused on solutions.</h2>
+          <p>I bring design, web development, and AI tools together to shape digital ideas into clear experiences.</p>
+        </div>
+        <div class="about-grid">
+          <div class="about-panel">
+            <h3>My approach</h3>
+            <p>I believe a website should look professional, explain things clearly, and make it easy for visitors to take the next step.</p>
+            <p>I use AI as a development assistant — not as a substitute for checking details, testing features, or understanding what a project needs.</p>
+            <div class="skills">
+              <span class="skill">Frontend Development</span><span class="skill">Backend Concepts</span>
+              <span class="skill">AI Website Builders</span><span class="skill">UI Design</span>
+              <span class="skill">E-commerce</span><span class="skill">Portfolio Design</span>
+              <span class="skill">Web App Planning</span><span class="skill">Problem Solving</span>
+            </div>
+          </div>
+          <div class="about-panel">
+            <h3>How I work</h3>
+            <div class="process-list">
+              <div class="process-item"><div class="process-number">01</div><div><h3>Understand your goal</h3><p>We clarify the audience, purpose, important features, and what success should look like.</p></div></div>
+              <div class="process-item"><div class="process-number">02</div><div><h3>Plan the experience</h3><p>I organize the content, page structure, visual style, and user journey before polishing the details.</p></div></div>
+              <div class="process-item"><div class="process-number">03</div><div><h3>Build and review</h3><p>I use suitable development and AI tools, then review the layout and functionality against the requirements.</p></div></div>
+              <div class="process-item"><div class="process-number">04</div><div><h3>Prepare for handover</h3><p>We check the final pages, links, forms, responsive layout, and any setup required for launch.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <div class="section-heading">
+            <div class="section-kicker">Get in touch</div>
+            <h2>Have a website idea? Let's talk.</h2>
+            <p>Tell me what you want to build. Share your goals, the features you need, and any design references you like.</p>
+          </div>
+          <div class="contact-details">
+            <div class="contact-detail"><span aria-hidden="true">✉</span><span>mubarikbilal15@gmail.com</span></div>
+            <div class="contact-detail"><span aria-hidden="true">⌘</span><span>Available for website and portfolio projects</span></div>
+          </div>
+        </div>
+        <div class="contact-panel">
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" placeholder="Enter your name" required /></div>
+              <div class="field"><label for="email">Your email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required /></div>
+            </div>
+            <div class="field"><label for="project">What do you need?</label><input id="project" name="project" placeholder="Business website, portfolio, web app..." required /></div>
+            <div class="field"><label for="message">Tell me about your project</label><textarea id="message" name="message" placeholder="A few details about your idea..." required></textarea></div>
+            <button class="button" type="submit">Prepare email <span aria-hidden="true">↗</span></button>
+            <p class="form-note">This form opens your email app with your message. Replace the sample email address in the code before publishing.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div><span class="footer-brand">SF.</span><br />Building useful digital experiences with web development and AI.</div>
+      <div class="footer-links">
+        <a href="#home">Home</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+      </div>
+      <a class="back-top" href="#home">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    document.getElementById("contactForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const recipient = "your.email@example.com"; // Replace with your real email address.
+      const subject = encodeURIComponent("Website project inquiry from " + form.get("name"));
+      const body = encodeURIComponent(
+        "Name: " + form.get("name") + "\n" +
+        "Email: " + form.get("email") + "\n" +
+        "Project type: " + form.get("project") + "\n\n" +
+        "Project details:\n" + form.get("message")
+      );
+      window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
